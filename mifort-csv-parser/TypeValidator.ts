@@ -18,21 +18,12 @@ export class MyTypeValidators {
         }
     }
 
-    static Surname(surname: string): [boolean, string] {
-        if (!Number(surname)) {
-            return [true, "Correct field"];
-        }
-        else {
-            return [false, surname + " is invalid name!"];
-        }
-    }
-
     static Integer(age: string): [boolean, string] {
         if (Number(age)) {
             return [true, "Correct field"];
         }
         else {
-            return [false, age + " is invalid name!"];
+            return [false, age + " is invalid age!"];
         }
     }
 

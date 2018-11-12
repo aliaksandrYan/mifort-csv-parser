@@ -20,20 +20,12 @@ var MyTypeValidators = /** @class */ (function () {
             return [false, email + " is invalid email!"];
         }
     };
-    MyTypeValidators.Surname = function (surname) {
-        if (!Number(surname)) {
-            return [true, "Correct field"];
-        }
-        else {
-            return [false, surname + " is invalid name!"];
-        }
-    };
     MyTypeValidators.Integer = function (age) {
         if (Number(age)) {
             return [true, "Correct field"];
         }
         else {
-            return [false, age + " is invalid name!"];
+            return [false, age + " is invalid age!"];
         }
     };
     MyTypeValidators.Phone = function (phone) {

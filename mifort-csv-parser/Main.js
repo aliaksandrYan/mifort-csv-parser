@@ -7,7 +7,6 @@ var config_1 = require("./config");
 var Validators_1 = require("./Validators");
 var WriteToDb_1 = require("./WriteToDb");
 var results = [];
-var validFieldsToDatabase = [];
 var stream = fs.createReadStream("data.csv");
 csv
     .fromStream(stream, { headers: true })
@@ -15,7 +14,10 @@ csv
     results.push(data);
 })
     .on("end", function () {
-    var config = config_1.csvConfig.csv;
+    WriteToDb_1.writeToDb(validateAll(results, config_1.csvConfig.csv), config_1.csvConfig.db);
+});
+function validateAll(results, config) {
+    var validFieldsToDatabase = [];
     for (var object in results) {
         var validObjects = {};
         for (var key in results[object]) {
@@ -32,7 +34,6 @@ csv
                                     var args = validators[0].arguments;
                                     var result = Validators_1.Validators[validatorType](value, args);
                                     if (result[0]) {
-                                        //to write DB
                                         validObjects[key] = value;
                                     }
                                     else {
@@ -41,7 +42,6 @@ csv
                                 }
                             }
                             else {
-                                // to writeDB
                                 validObjects[key] = value;
                             }
                         }
@@ -54,6 +54,6 @@ csv
         }
         validFieldsToDatabase.push(validObjects);
     }
-    console.log(validFieldsToDatabase);
-    WriteToDb_1.writeToDb(validFieldsToDatabase, config_1.csvConfig.db);
-});
+    return validFieldsToDatabase;
+}
+exports.validateAll = validateAll;
